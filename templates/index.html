@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Main page</title>
+</head>
+<body>
+{% for i in images %}
+    <h1>{{ i.account_id }}</h1>
+    <img src="{{ i.link }}" /><br/>
+{% endfor %}
+</body>
+</html>
