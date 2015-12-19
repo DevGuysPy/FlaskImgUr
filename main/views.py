@@ -1,18 +1,14 @@
 import logging
 from itertools import islice
 
-from FlaskTutor import app
 from flask import render_template
-from requests.exceptions import ConnectionError
 from imgurpython import ImgurClient
+from requests.exceptions import ConnectionError
 
+from FlaskTutor import app
 from .models import User, Album, db
 
 logger = logging.getLogger(__name__)
-
-IMGUR_ID = "xxx"
-IMGUR_SECRET = "yyy"
-
 
 def matches_reqs(item):
     return \
@@ -23,21 +19,21 @@ def matches_reqs(item):
 
 @app.route('/')
 def index():
-    client = ImgurClient(IMGUR_ID, IMGUR_SECRET)
+    client = ImgurClient(app.config['IMGUR_ID'], app.config['IMGUR_SECRET'])
     try:
-        gallery = client.gallery(sort='top', window='week', page=0)
+        albums = client.gallery(sort='top', window='week', page=0)
     except ConnectionError:
         logger.error('Connection error')
         return
-    images = list(islice((item for item in gallery if matches_reqs(item)), 0, 10))
-    for i in images:
-        if i.account_id:
-            author = User.query.get(i.account_id)
+    images = list(islice((a for a in albums if matches_reqs(a)), 0, 10))
+    for img in images:
+        if img.account_id:
+            author = User.query.get(img.account_id)
             if not author:
-                author = User(id=i.account_id, nickname=i.account_url)
+                author = User(id=img.account_id, nickname=img.account_url)
                 db.session.add(author)
-            if not Album.query.get(i.id):
-                a = Album(id=i.id, link=i.link, author=author)
+            if not Album.query.get(img.id):
+                a = Album(id=img.id, link=img.link, author=author, title=img.title)
                 db.session.add(a)
     db.session.commit()
 

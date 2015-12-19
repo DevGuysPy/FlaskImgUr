@@ -9,9 +9,12 @@ class User(db.Model):
 
 
 class Album(db.Model):
-    __tablename__ = 'galleries'
+    __tablename__ = 'albums'
 
     id = db.Column(db.String(128), primary_key=True)
     link = db.Column(db.String(256))
+
     author_id = db.Column(db.ForeignKey('users.id'))
     author = db.relationship('User', backref='galleries')
+
+    title = db.Column(db.String())
