@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Main page</title>
+    <title>asdasd</title>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css"
           media="screen,projection"/>
+
+    <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
@@ -21,17 +24,14 @@
 </nav>
 
 <div class="container">
+    <div class="row"><h1 class="center-align">NEWS</h1></div>
     <div class="row">
-        {% for i in images %}
+        {% for i in hot_news %}
             <div class="col s6">
                 <div class="card">
-                    <div class="card-image">
-                        <img src="{{ i.link }}"/>
-                        <span class="card-title">{{ i.title }}</span>
-                    </div>
-                    <div class="card-content">
-                        <a href="https://imgur.com/user/{{ i.account_url }}">Author: {{ i.account_url }}</a>
-                    </div>
+                    <p class="center-align"><a href="{{ i.url }}">{{ i.title }}</a></p>
+                    <p class="center-align">Author: <a href="https://www.reddit.com/user/{{ i.author.name }}">
+                        {{ i.author.name }}</a></p>
                 </div>
             </div>
         {% endfor %}
@@ -40,7 +40,6 @@
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
-</script>
+        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/home/andrii/env python
 
 from flask.ext.migrate import Migrate, MigrateCommand
 from flask.ext.script import Manager
@@ -12,5 +12,5 @@ migrate = Migrate(app, db)
 if __name__ == '__main__':
     # db.create_all()
     manager.run()
-
+    # app.run()
 
