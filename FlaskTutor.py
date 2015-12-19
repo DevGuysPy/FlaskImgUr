@@ -1,4 +1,4 @@
-#!/home/andrii/env python
+#!/usr/bin/env python
 
 from flask.ext.migrate import Migrate, MigrateCommand
 from flask.ext.script import Manager
