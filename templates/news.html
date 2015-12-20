@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>asdasd</title>
+    <title>{{ sub_r }}</title>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet"
@@ -24,7 +24,21 @@
 </nav>
 
 <div class="container">
-    <div class="row"><h1 class="center-align">NEWS</h1></div>
+    <div class="row">
+        <div class="col s6">
+            <form method="post" action="{{ url_for('r_news') }}">
+                <select class="browser-default" name="subreddit">
+                    <option value="news" selected>news</option>
+                    <option value="funny">funny</option>
+                    <option value="worldnews">worldnews</option>
+                    <option value="movies">movies</option>
+                </select>
+                <label>Select subreddit</label>
+                <button class="btn waves-effect waves-light" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="row"><h1 class="center-align">{{ sub_r }}</h1></div>
     <div class="row">
         {% for i in hot_news %}
             <div class="col s6">

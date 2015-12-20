@@ -12,6 +12,7 @@ from .models import User, Album, db
 
 logger = logging.getLogger(__name__)
 
+
 def matches_reqs(item):
     return \
         not item.is_album and \
@@ -44,13 +45,17 @@ def index():
             images=images)
 
 
-@app.route('/news')
+@app.route('/news', methods=['GET', 'POST'])
 def r_news():
+    if request.method == 'POST':
+        sub_r = request.form['subreddit']
+    else:
+        sub_r = 'news'
     user_agent = ("Python test app by /u/natyahlyi")
-    r = praw.Reddit(user_agent=user_agent)
+    reddit = praw.Reddit(user_agent=user_agent)
     hot_news = []
-    subreddit = r.get_subreddit('news')
+    subreddit = reddit.get_subreddit(sub_r)
     for s in subreddit.get_hot(limit=100):
         hot_news.append(s)
 
-    return render_template('news.html', hot_news=hot_news)
+    return render_template('news.html', hot_news=hot_news, sub_r=sub_r)
