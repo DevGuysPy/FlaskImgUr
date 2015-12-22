@@ -1,7 +1,9 @@
 import logging
 from itertools import islice
 
-from flask import render_template
+import praw
+
+from flask import render_template, request
 from imgurpython import ImgurClient
 from requests.exceptions import ConnectionError
 
@@ -9,6 +11,7 @@ from FlaskTutor import app
 from .models import User, Album, db
 
 logger = logging.getLogger(__name__)
+
 
 def matches_reqs(item):
     return \
@@ -38,11 +41,21 @@ def index():
     db.session.commit()
 
     return render_template(
-        "index.html",
-        images=images)
+            "index.html",
+            images=images)
 
 
-@app.route('/hello')
-def hello_again():
-    return 'Hello again!'
+@app.route('/news', methods=['GET', 'POST'])
+def r_news():
+    if request.method == 'POST':
+        sub_r = request.form['subreddit']
+    else:
+        sub_r = 'news'
+    user_agent = ("Python test app by /u/natyahlyi")
+    reddit = praw.Reddit(user_agent=user_agent)
+    hot_news = []
+    subreddit = reddit.get_subreddit(sub_r)
+    for s in subreddit.get_hot(limit=100):
+        hot_news.append(s)
 
+    return render_template('news.html', hot_news=hot_news, sub_r=sub_r)

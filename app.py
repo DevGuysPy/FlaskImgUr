@@ -12,3 +12,5 @@ db = SQLAlchemy(app)
 # basedir = os.path.abspath(os.path.dirname(__file__))
 
 
+import main.models
+import main.views
