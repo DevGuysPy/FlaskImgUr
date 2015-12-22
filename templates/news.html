@@ -27,10 +27,11 @@
         <div class="col s6">
             <form method="post" action="{{ url_for('r_news') }}">
                 <select class="browser-default" name="subreddit">
-                    <option value="news" selected>news</option>
-                    <option value="funny">funny</option>
-                    <option value="worldnews">worldnews</option>
-                    <option value="movies">movies</option>
+                    <option value="news" selected>News</option>
+                    <option value="funny">Funny</option>
+                    <option value="worldnews">Worldnews</option>
+                    <option value="movies">Movies</option>
+                    <option value="python">Python</option>
                 </select>
                 <label>Select subreddit</label>
                 <button class="btn waves-effect waves-light" type="submit">Submit</button>
@@ -39,12 +40,12 @@
     </div>
     <div class="row"><h1 class="center-align">{{ sub_r }}</h1></div>
     <div class="row">
-        {% for i in hot_news %}
+        {% for post in hot_news %}
             <div class="col s6">
                 <div class="card">
-                    <p class="center-align"><a href="{{ i.url }}">{{ i.title }}</a></p>
-                    <p class="center-align">Author: <a href="https://www.reddit.com/user/{{ i.author.name }}">
-                        {{ i.author.name }}</a></p>
+                    <p class="center-align"><a href="{{ post.url }}">{{ post.title }}</a></p>
+                    <p class="center-align">Author: <a href="https://www.reddit.com/user/{{ post.author.name }}">
+                        {{ post.author.name }}</a></p>
                 </div>
             </div>
         {% endfor %}
